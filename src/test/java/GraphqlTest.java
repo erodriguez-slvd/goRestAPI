@@ -34,6 +34,34 @@ public class GraphqlTest {
                 .post("/graphql");
 
         response.then().log().all(true).assertThat().statusCode(200);
-
     }
+    @Test
+    public void getAUserByID(){
+        //Create the graphql query in JSON format
+        String bodyQuery="{\n" +
+                "  \"query\": \"query User { user(id: \\\"6849956\\\") { email gender id name status }}\"\n" +
+                "}";
+        Response response = given().log().all()
+                .spec(request)
+                .body(bodyQuery)
+                .when()
+                .post("/graphql");
+
+        response.then().log().all(true).assertThat().statusCode(200);
+    }
+    @Test
+    public void createAUser(){
+        //Create the graphql query in JSON format
+        String bodyQuery="{\n" +
+                "  \"query\": \"mutation CreateUser { createUser(input: null) { clientMutationId }}\"\n" +
+                "}";
+        Response response = given().log().all()
+                .spec(request)
+                .body(bodyQuery)
+                .when()
+                .post("/graphql");
+
+        response.then().log().all(true).assertThat().statusCode(200);
+    }
+
 }
